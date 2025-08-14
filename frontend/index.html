@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Подсчёт деталей игровых комплексов</title>
+	<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+	<header>
+		<h1>Подсчёт деталей игровых комплексов</h1>
+	</header>
+	<main>
+		<section class="panel">
+			<h2>Выбор комплексов</h2>
+			<div class="row">
+				<label for="complexSelect">Комплекс:</label>
+				<select id="complexSelect"></select>
+				<label for="complexCount">Кол-во:</label>
+				<input id="complexCount" type="number" min="1" value="1" />
+				<button id="addComplexBtn">Добавить</button>
+			</div>
+			<div class="table-wrapper">
+				<table id="selectionTable">
+					<thead>
+						<tr>
+							<th>Комплекс</th>
+							<th>Кол-во</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<div class="actions">
+				<button id="countBtn" class="primary">Посчитать детали</button>
+			</div>
+		</section>
+
+		<section class="panel">
+			<h2>Результат подсчёта</h2>
+			<div class="table-wrapper">
+				<table id="resultTable">
+					<thead>
+						<tr>
+							<th>Деталь</th>
+							<th>Ед.</th>
+							<th>Итого</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="panel">
+			<h2>База данных (простая админка)</h2>
+			<div class="grid">
+				<div>
+					<h3>Добавить деталь</h3>
+					<div class="row">
+						<input id="partName" placeholder="Название" />
+						<input id="partUnit" placeholder="Единица (шт, кг...)" />
+						<button id="addPartBtn">Добавить деталь</button>
+					</div>
+				</div>
+				<div>
+					<h3>Добавить комплекс</h3>
+					<div class="row">
+						<input id="complexName" placeholder="Название" />
+						<input id="complexDesc" placeholder="Описание" />
+						<button id="addComplexAdminBtn">Добавить комплекс</button>
+					</div>
+				</div>
+				<div>
+					<h3>Состав комплекса</h3>
+					<div class="row">
+						<select id="assignComplex"></select>
+						<select id="assignPart"></select>
+						<input id="assignQty" type="number" min="0" value="1" />
+						<button id="assignBtn">Назначить</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<div id="toast" class="toast" hidden></div>
+	</footer>
+	<script src="/app.js"></script>
+</body>
+</html>
