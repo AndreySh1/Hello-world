@@ -9,6 +9,11 @@ from sqlmodel import Session, select
 from .db import init_db, get_session, engine
 from .models import GameComplex, Part, ComplexPart
 
+# added imports
+import os
+import sys
+from pathlib import Path
+
 
 class ComplexCreate(BaseModel):
     name: str
@@ -42,6 +47,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# added helper to resolve frontend directory at runtime and in PyInstaller bundles
+
+def _resolve_frontend_dir() -> str:
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, "frontend")
+    candidates = [
+        Path(__file__).resolve().parent.parent / "frontend",
+        Path.cwd() / "frontend",
+    ]
+    for p in candidates:
+        if p.exists():
+            return str(p)
+    return "frontend"
+
+FRONTEND_DIR = _resolve_frontend_dir()
 
 
 def seed_if_empty() -> None:
@@ -216,4 +237,4 @@ def count_parts(body: CountRequest, session: Session = Depends(get_session)) -> 
 # ---------- Static frontend ----------
 
 # Mount after API routes to avoid shadowing
-app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
